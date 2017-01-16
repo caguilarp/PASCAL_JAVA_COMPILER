@@ -1,0 +1,1 @@
+Se debera clonar el presente proyecto, solo es permitido trabajar en Java, una vez finalizado se deberan subir los cambios al repositorio actual, la gramatica a utilizar es la siguiente http://www2.informatik.uni-halle.de/lehre/pascal/sprache/pas_bnf.html.
