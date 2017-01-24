@@ -1,8 +1,8 @@
 package compilador_pascal;
 import java_cup.runtime.*;
 import java.io.*;
-import calculadora.TablaSimbolos;
-import calculadora.Simbolo;
+import compilador_pascal.TablaSimbolos;
+import compilador_pascal.Simbolo;
 
 
 /**
@@ -25,14 +25,20 @@ import calculadora.Simbolo;
 %line
 %column
 %%
+"program"  { return new Symbol(sym.PROGRAM); }
+"type"  { return new Symbol(sym.TYPE); }
+"VAR"  { return new Symbol(sym.TYPE); }
+":"  { return new Symbol(sym.DOSPUNTO); }
+";"  { return new Symbol(sym.PUNTOYCOMA); }
 "+"  { return new Symbol(sym.OpAritm); }
 "-"  { return new Symbol(sym.OpAritm); }
 "*"  { return new Symbol(sym.OpAritm); }
 "/"  { return new Symbol(sym.OpAritm); }
+"div"  { return new Symbol(sym.OpAritm); }
 ";"  { return new Symbol(sym.PUNTOYCOMA); }
 "("  { return new Symbol(sym.LPAREN); }
 ")"  { return new Symbol(sym.RPAREN); }
-"="  { return new Symbol(sym.ASIG); }
+":="  { return new Symbol(sym.ASIG); }
 "<"  { return new Symbol(sym.RELATIONAL-OP); }
 "<="  { return new Symbol(sym.RELATIONAL-OP); }
 "<>"  { return new Symbol(sym.RELATIONAL-OP); }
@@ -40,6 +46,8 @@ import calculadora.Simbolo;
 ">"  { return new Symbol(sym.RELATIONAL-OP); }
 "begin"  { return new Symbol(sym.BEGIN); }
 "for"  { return new Symbol(sym.FOR); }
+"goto"  { return new Symbol(sym.GOTO); }
+"repeat"  { return new Symbol(sym.REPEAT); }
 "while"  { return new Symbol(sym.WHILE); }
 "constant"  { return new Symbol(sym.CONSTANT); }
 "case"  { return new Symbol(sym.CASE); }
@@ -48,10 +56,10 @@ import calculadora.Simbolo;
 "real"  { return new Symbol(sym.REAL); }
 "string"  { return new Symbol(sym.STRING); }
 "array"  { return new Symbol(sym.ARRAY); }
-"proc"  { return new Symbol(sym.PROC); }
-"func"  { return new Symbol(sym.FUNC); }
-"End."  { return new Symbol(sym.END); }
-"Write"  { return new Symbol(sym.PRINT); }
+"procduce"  { return new Symbol(sym.PROCDUCE); }
+"function"  { return new Symbol(sym.FUNCTION); }
+"end"  { return new Symbol(sym.END); }
+"write"  { return new Symbol(sym.PRINT); }
 
 [:jletter:][:jletterdigit:]* 
 {
