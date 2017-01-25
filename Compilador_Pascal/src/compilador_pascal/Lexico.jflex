@@ -27,7 +27,7 @@ import compilador_pascal.Simbolo;
 %%
 "program"  { return new Symbol(sym.PROGRAM); }
 "type"  { return new Symbol(sym.TYPE); }
-"VAR"  { return new Symbol(sym.TYPE); }
+"VAR"  { return new Symbol(sym.VAR); }
 ":"  { return new Symbol(sym.DOSPUNTO); }
 ";"  { return new Symbol(sym.PUNTOYCOMA); }
 "+"  { return new Symbol(sym.OpAritm); }

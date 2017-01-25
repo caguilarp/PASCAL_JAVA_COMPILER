@@ -1,0 +1,79 @@
+package compilador_pascal;
+import java_cup.runtime.*;
+import java.io.*;
+import calculadora.TablaSimbolos;
+import calculadora.Simbolo;
+
+
+/**
+ *
+ * @author Fredy Zamora
+ */
+ 
+parser code {:
+       static TablaSimbolos tabla = new TablaSimbolos();
+       public static void main(String[] arg){
+        try{
+      parser asin= new parser (new Yylex( new FileReader      (arg[0]), tabla));
+    Object result =asin.parse().value;
+
+
+    } catch (Exception ex){
+       ex.printStackTrace();
+      
+
+      }
+     } 
+:};
+terminal DOSPUNTO, OPARITM,PUNTOYCOMA,RELATIONAL-OP;
+terminal BEGIN, LPAREN, RPAREN, WRITE, ASIG, COMA;
+terminal FOR, GOTO, REPEAT, WHILE, CONSTANT, IF, FUNCTION,END,ARRAY;
+terminal PROCDUCE;
+terminal Simbolo ID;
+terminal Double NUMERO;
+non terminal listaExpr;
+non terminal Double expr, asig;
+precedence left OPARITM;
+
+
+listaExpr ::= listaExpr asig PUNTOYCOMA
+   
+         | listaExpr PRINT expr:e PUNTOYCOMA
+            {:System.out.println("= " + e); :}
+         | listaExpr error PUNTOYCOMA
+         | /* Epsilon */
+;
+
+asig ::= ID:s ASIG expr:e {:
+                              RESULT = e;
+                              s.valor = e;
+                            tabla.imprimir();
+                      :}
+            | ID:s ASIG asig:e {:
+                              RESULT = e;
+                               s.valor = e;
+                               tabla.imprimir();
+
+                              :}
+ ;
+ expr ::= expr:e1 OPARITM expr:e2
+                    {: RESULT = new Double(e1.doubleValue() + e2.doubleValue()); :}
+
+ | expr:e1 OPARITM expr:e2
+                     {: RESULT = new Double(e1.doubleValue() - e2.doubleValue()); :}
+ | expr:e1 OPARITM expr:e2
+                    {: RESULT = new Double(e1.doubleValue() * e2.doubleValue()); :}
+ | expr:e1 OPARITM expr:e2
+                    {: RESULT = new Double(e1.doubleValue() / e2.doubleValue()); :}
+| expr:e1 OPARITM expr:e2
+                    {: RESULT = new Double(e1.doubleValue() % e2.doubleValue()); :}
+
+ | ID:s {: RESULT = s.valor; :}
+ | NUMERO: n 
+          {: RESULT = n;:}
+ | MENOS expr:e 
+          {: RESULT = new Double(0 - e.doubleValue()); :}
+
+ | LPAREN expr:e RPAREN {: RESULT = e; :}
+;
+
